@@ -8,11 +8,14 @@ products = [
 
 DISCOUNT_RATE = 0.9
 
-puts "いらっしゃいませ！商品を選んでください。"
-
-products.each.with_index(1) do |product,i|
-  puts "#{i}.#{product[:name]} #{product[:price]}円"
+def disp_products(products)
+  puts "いらっしゃいませ！商品を選んでください。"
+  products.each.with_index(1) do |product,i|
+    puts "#{i}.#{product[:name]} #{product[:price]}円"
+  end
 end
+
+disp_products(products)
 
 while true
   print "商品の番号を選択してください>>"
