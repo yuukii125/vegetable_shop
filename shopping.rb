@@ -15,23 +15,31 @@ def disp_products(products)
   end
 end
 
+def choose_product(products)
+  while true
+    print "商品の番号を選択してください>>"
+    select_product_num = gets.to_i
+    break if (1..4).include?(select_product_num)
+    puts "1~4の番号を入力してください"
+  end
+  chosen_product = products[select_product_num - 1]
+end
+
+def decide_quantity(chosen_product)
+  puts "#{chosen_product[:name]}ですね。何個購入しますか？"
+  
+  while true
+    print "商品の個数を入力してください>>"
+    buy_product_num = gets.to_i
+    break if buy_product_num >= 1
+    puts "1個以上選んでください"
+  end
+end
+
 disp_products(products)
+chosen_product = choose_product(products)
+decide_quantity(chosen_product)
 
-while true
-  print "商品の番号を選択してください>>"
-  select_product_num = gets.to_i
-  break if (1..4).include?(select_product_num)
-  puts "1~4の番号を入力してください"
-end
-
-puts "#{products[select_product_num - 1][:name]}ですね。何個購入しますか？"
-
-while true
-  print "商品の個数を入力してください>>"
-  buy_product_num = gets.to_i
-  break if buy_product_num >= 1
-  puts "1個以上選んでください"
-end
 
 
 if buy_product_num >= 5
