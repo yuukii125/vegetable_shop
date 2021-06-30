@@ -34,20 +34,21 @@ def decide_quantity(chosen_product)
     break if buy_product_num >= 1
     puts "1個以上選んでください"
   end
+  quantity_of_product = buy_product_num
+end
+
+def purchase_product(chosen_product, quantity_of_product)
+  if quantity_of_product >= 5
+    puts "5個以上なので10%割引となります！"
+    total_amount = chosen_product[:price] * quantity_of_product * DISCOUNT_RATE
+  else
+    total_amount = chosen_product[:price] * quantity_of_product
+  end
+  puts "合計金額は#{total_amount.floor}円です"
+  puts "お買い上げありがとうございました！"
 end
 
 disp_products(products)
 chosen_product = choose_product(products)
-decide_quantity(chosen_product)
-
-
-
-if buy_product_num >= 5
-  puts "5個以上なので10%割引となります！"
-  total_amount = products[select_product_num - 1][:price] * buy_product_num * DISCOUNT_RATE
-else
-  total_amount = products[select_product_num - 1][:price] * buy_product_num
-end
-
-puts "合計金額は#{total_amount.floor}円です"
-puts "お買い上げありがとうございました！"
+quantity_of_product = decide_quantity(chosen_product)
+purchase_product(chosen_product, quantity_of_product)
