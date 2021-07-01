@@ -7,10 +7,13 @@ products = [
 ]
 
 DISCOUNT_RATE = 0.9
+FIRST_PRODUCT_NUM = 1
+LAST_PRODUCT_NUM = 4
+DISCOUNT_PRODUCT_NUM =5
 
 def disp_products(products)
   puts "いらっしゃいませ！商品を選んでください。"
-  products.each.with_index(1) do |product,i|
+  products.each.with_index(FIRST_PRODUCT_NUM) do |product,i|
     puts "#{i}.#{product[:name]} #{product[:price]}円"
   end
 end
@@ -19,8 +22,8 @@ def choose_product(products)
   while true
     print "商品の番号を選択してください>>"
     select_product_num = gets.to_i
-    break if (1..4).include?(select_product_num)
-    puts "1~4の番号を入力してください"
+    break if (FIRST_PRODUCT_NUM..LAST_PRODUCT_NUM).include?(select_product_num)
+    puts "#{FIRST_PRODUCT_NUM}~#{LAST_PRODUCT_NUM}の番号を入力してください"
   end
   chosen_product = products[select_product_num - 1]
 end
@@ -38,8 +41,8 @@ def decide_quantity(chosen_product)
 end
 
 def purchase_product(chosen_product, quantity_of_product)
-  if quantity_of_product >= 5
-    puts "5個以上なので10%割引となります！"
+  if quantity_of_product >= DISCOUNT_PRODUCT_NUM
+    puts "#{DISCOUNT_PRODUCT_NUM}個以上なので10%割引となります！"
     total_amount = chosen_product[:price] * quantity_of_product * DISCOUNT_RATE
   else
     total_amount = chosen_product[:price] * quantity_of_product
