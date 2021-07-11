@@ -1,10 +1,24 @@
+#商品クラス
+class Product
+  def initialize(product_params)
+    @name = product_params[:name]
+    @price = product_params[:price]
+  end
+end
+
 # 商品データ
-products = [
+product_params = [
   {name: "トマト", price: 100},
   {name: "きゅうり", price: 200},
   {name: "玉ねぎ", price: 300},
   {name: "なす", price: 400}
 ]
+
+products = []
+product_params.each do |param|
+  products << Product.new(param)
+end
+
 
 DISCOUNT_RATE = 0.9
 FIRST_PRODUCT_NUM = 1
