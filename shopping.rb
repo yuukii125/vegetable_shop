@@ -1,36 +1,55 @@
-#商品クラス
+DISCOUNT_RATE = 0.9
+FIRST_PRODUCT_NUM = 1
+LAST_PRODUCT_NUM = 4
+DISCOUNT_PRODUCT_NUM =5
+
+# 商品クラス
 class Product
+  attr_reader :name, :price
   def initialize(product_params)
     @name = product_params[:name]
     @price = product_params[:price]
   end
 end
 
+class Greengrocer
+  def initialize(product_params)
+    @products = []
+    product_params.each do |param|
+      @products << Product.new(param)
+    end
+  end
+
+  def disp_products
+    puts "いらっしゃいませ！商品を選んでください。"
+    @products.each.with_index(FIRST_PRODUCT_NUM) do |product,i|
+      puts "#{i}.#{product.name}(#{product.price}円)"
+    end
+  end
+
+end
+
 # 商品データ
-product_params = [
+product_params1 = [
   {name: "トマト", price: 100},
   {name: "きゅうり", price: 200},
   {name: "玉ねぎ", price: 300},
   {name: "なす", price: 400}
 ]
 
-products = []
-product_params.each do |param|
-  products << Product.new(param)
-end
+product_params2 = [
+  {name: "パセリ", price: 100},
+  {name: "ブロッコリー", price: 300},
+  {name: "アスパラガス", price: 200}
+]
 
 
-DISCOUNT_RATE = 0.9
-FIRST_PRODUCT_NUM = 1
-LAST_PRODUCT_NUM = 4
-DISCOUNT_PRODUCT_NUM =5
+greengrocer1 = Greengrocer.new(product_params1)
+greengrocer2 = Greengrocer.new(product_params2)
 
-def disp_products(products)
-  puts "いらっしゃいませ！商品を選んでください。"
-  products.each.with_index(FIRST_PRODUCT_NUM) do |product,i|
-    puts "#{i}.#{product[:name]} #{product[:price]}円"
-  end
-end
+greengrocer1.disp_products
+greengrocer2.disp_products
+
 
 def choose_product(products)
   while true
@@ -65,7 +84,6 @@ def purchase_product(chosen_product, quantity_of_product)
   puts "お買い上げありがとうございました！"
 end
 
-disp_products(products)
 chosen_product = choose_product(products)
 quantity_of_product = decide_quantity(chosen_product)
 purchase_product(chosen_product, quantity_of_product)
