@@ -5,8 +5,10 @@ DISCOUNT_PRODUCT_NUM =5
 
 # 商品クラス
 class Product
-  attr_reader :name, :price
+  attr_reader :id, :name, :price
+  @@count = 30
   def initialize(product_params)
+    @id = @@count += 1
     @name = product_params[:name]
     @price = product_params[:price]
   end
@@ -15,6 +17,10 @@ end
 class Greengrocer
   def initialize(product_params)
     @products = []
+    register_product(product_params)
+  end
+  
+  def register_product(product_params)
     product_params.each do |param|
       @products << Product.new(param)
     end
@@ -22,11 +28,10 @@ class Greengrocer
 
   def disp_products
     puts "いらっしゃいませ！商品を選んでください。"
-    @products.each.with_index(FIRST_PRODUCT_NUM) do |product,i|
-      puts "#{i}.#{product.name}(#{product.price}円)"
+    @products.each.with_index(FIRST_PRODUCT_NUM) do |product|
+      puts "#{product.id}.#{product.name}(#{product.price}円)"
     end
   end
-
 end
 
 # 商品データ
@@ -37,18 +42,17 @@ product_params1 = [
   {name: "なす", price: 400}
 ]
 
-product_params2 = [
+greengrocer1 = Greengrocer.new(product_params1)
+
+adding_product_params1 = [
   {name: "パセリ", price: 100},
   {name: "ブロッコリー", price: 300},
   {name: "アスパラガス", price: 200}
 ]
 
-
-greengrocer1 = Greengrocer.new(product_params1)
-greengrocer2 = Greengrocer.new(product_params2)
-
+greengrocer1.register_product(adding_product_params1)
 greengrocer1.disp_products
-greengrocer2.disp_products
+
 
 
 def choose_product(products)
