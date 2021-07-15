@@ -6,7 +6,7 @@ DISCOUNT_PRODUCT_NUM =5
 # 商品クラス
 class Product
   attr_reader :id, :name, :price
-  @@count = 30
+  @@count = 0
   def initialize(product_params)
     @id = @@count += 1
     @name = product_params[:name]
@@ -15,6 +15,7 @@ class Product
 end
 
 class Greengrocer
+  attr_reader :products
   def initialize(product_params)
     @products = []
     register_product(product_params)
@@ -30,6 +31,18 @@ class Greengrocer
     puts "いらっしゃいませ！商品を選んでください。"
     @products.each.with_index(FIRST_PRODUCT_NUM) do |product|
       puts "#{product.id}.#{product.name}(#{product.price}円)"
+    end
+  end
+end
+
+class User
+  def choose_product(products)
+    while true
+      print "商品の番号を選択 >"
+      select_product_id = gets.to_i
+      @chosen_product = products.find{|product| product.id == select_product_id}
+      break if !@chosen_product.nil?
+      puts "#{products.first.id}から#{products.last.id}の番号から選んでください。"
     end
   end
 end
@@ -53,17 +66,8 @@ adding_product_params1 = [
 greengrocer1.register_product(adding_product_params1)
 greengrocer1.disp_products
 
-
-
-def choose_product(products)
-  while true
-    print "商品の番号を選択してください>>"
-    select_product_num = gets.to_i
-    break if (FIRST_PRODUCT_NUM..LAST_PRODUCT_NUM).include?(select_product_num)
-    puts "#{FIRST_PRODUCT_NUM}~#{LAST_PRODUCT_NUM}の番号を入力してください"
-  end
-  chosen_product = products[select_product_num - 1]
-end
+user = User.new
+user.choose_product(greengrocer1.products)
 
 def decide_quantity(chosen_product)
   puts "#{chosen_product[:name]}ですね。何個購入しますか？"
